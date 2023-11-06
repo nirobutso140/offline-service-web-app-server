@@ -28,10 +28,16 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     const vehicleServiceCollection = client.db('Vehicle').collection('VehicleServices')
+    const addServiceCollection = client.db('Vehicle').collection('addService')
 
 
     app.get("/services", async (req, res) => {
         const result = await vehicleServiceCollection.find().toArray();
+        res.send(result);
+      });
+
+      app.get("/readAddedService", async (req, res) => {
+        const result = await addServiceCollection.find().toArray();
         res.send(result);
       });
 
@@ -44,6 +50,16 @@ async function run() {
         console.log(result);
         res.send(result);
       });
+
+      app.post("/addService", async (req, res) => {
+        const user = req.body;
+        //   console.log(user);
+        const result = await addServiceCollection.insertOne(user);
+        console.log(result);
+        res.send(result);
+      });
+
+      
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
