@@ -29,6 +29,7 @@ async function run() {
     await client.connect();
     const vehicleServiceCollection = client.db('Vehicle').collection('VehicleServices')
     const addServiceCollection = client.db('Vehicle').collection('addService')
+    const bookServiceCollection = client.db('Vehicle').collection('bookService')
 
 
     app.get("/services", async (req, res) => {
@@ -55,6 +56,14 @@ async function run() {
         const user = req.body;
         //   console.log(user);
         const result = await addServiceCollection.insertOne(user);
+        console.log(result);
+        res.send(result);
+      });
+
+      app.post("/bookService", async (req, res) => {
+        const user = req.body;
+        //   console.log(user);
+        const result = await bookServiceCollection.insertOne(user);
         console.log(result);
         res.send(result);
       });
