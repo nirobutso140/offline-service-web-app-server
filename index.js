@@ -68,6 +68,17 @@ async function run() {
         res.send(result);
       });
 
+      app.delete("/deleteService/:id", async (req, res) => {
+        const id = req.params.id;
+        console.log("delete", id);
+        const query = {
+          _id: new ObjectId(id),
+        };
+        const result = await addServiceCollection.deleteOne(query);
+        console.log(result);
+        res.send(result);
+      });
+
       
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
