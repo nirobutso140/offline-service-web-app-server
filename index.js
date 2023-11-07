@@ -52,6 +52,11 @@ async function run() {
         res.send(result);
       });
 
+      app.get("/readBookService", async (req, res) => {
+        const result = await bookServiceCollection.find().toArray();
+        res.send(result);
+      });
+
       app.post("/addService", async (req, res) => {
         const user = req.body;
         //   console.log(user);
@@ -78,6 +83,30 @@ async function run() {
         console.log(result);
         res.send(result);
       });
+
+      app.put("/update/:id", async (req, res) => {
+      const id = req.params.id;
+      const data = req.body;
+      console.log("id", id, data);
+      const filter = { _id: new ObjectId(id) };
+      const updatedUSer = {
+        $set: {
+          serviceName: data.serviceName,
+          name: data.name,
+          email: data.email,
+          area: data.area,
+          price: data.price,
+          description: data.description,
+          photo: data.photo,
+          
+        },
+      };
+      const result = await addServiceCollection.updateOne(
+        filter,
+        updatedUSer,
+      );
+      res.send(result);
+    });
 
       
     // Send a ping to confirm a successful connection
