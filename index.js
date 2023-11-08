@@ -33,58 +33,78 @@ async function run() {
 
 
     app.get("/services", async (req, res) => {
-        const result = await vehicleServiceCollection.find().toArray();
-        res.send(result);
-      });
+      const result = await vehicleServiceCollection.find().toArray();
+      res.send(result);
+    });
 
-      app.get("/readAddedService", async (req, res) => {
-        const result = await addServiceCollection.find().toArray();
-        res.send(result);
-      });
+    app.get("/readAddedService", async (req, res) => {
+      const result = await addServiceCollection.find().toArray();
+      res.send(result);
+    });
 
-      app.get("/details/:id", async (req, res) => {
-        const id = req.params.id;
-        const query = {
-          _id: new ObjectId(id),
-        };
-        const result = await vehicleServiceCollection.findOne(query);
-        console.log(result);
-        res.send(result);
-      });
+    app.get("/details/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = {
+        _id: new ObjectId(id),
+      };
+      const result = await vehicleServiceCollection.findOne(query);
+      console.log(result);
+      res.send(result);
+    });
 
-      app.get("/readBookService", async (req, res) => {
-        const result = await bookServiceCollection.find().toArray();
-        res.send(result);
-      });
+    app.get("/edit/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = {
+        _id: new ObjectId(id),
+      };
+      const result = await addServiceCollection.findOne(query);
+      console.log(result);
+      res.send(result);
+    });
 
-      app.post("/addService", async (req, res) => {
-        const user = req.body;
-        //   console.log(user);
-        const result = await addServiceCollection.insertOne(user);
-        console.log(result);
-        res.send(result);
-      });
+    app.get("/readBookService", async (req, res) => {
+      const result = await bookServiceCollection.find().toArray();
+      res.send(result);
+    });
 
-      app.post("/bookService", async (req, res) => {
-        const user = req.body;
-        //   console.log(user);
-        const result = await bookServiceCollection.insertOne(user);
-        console.log(result);
-        res.send(result);
-      });
+    app.get("/readBookService/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = {
+        userEmail: email,
+      };
+      const result = await bookServiceCollection.findOne(query);
+      console.log(result);
+      res.send(result);
+    });
 
-      app.delete("/deleteService/:id", async (req, res) => {
-        const id = req.params.id;
-        console.log("delete", id);
-        const query = {
-          _id: new ObjectId(id),
-        };
-        const result = await addServiceCollection.deleteOne(query);
-        console.log(result);
-        res.send(result);
-      });
+    app.post("/addService", async (req, res) => {
+      const user = req.body;
+      //   console.log(user);
+      const result = await addServiceCollection.insertOne(user);
+      console.log(result);
+      res.send(result);
+    });
 
-      app.put("/update/:id", async (req, res) => {
+    app.post("/bookService", async (req, res) => {
+      const user = req.body;
+      //   console.log(user);
+      const result = await bookServiceCollection.insertOne(user);
+      console.log(result);
+      res.send(result);
+    });
+
+    app.delete("/deleteService/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log("delete", id);
+      const query = {
+        _id: new ObjectId(id),
+      };
+      const result = await addServiceCollection.deleteOne(query);
+      console.log(result);
+      res.send(result);
+    });
+
+    app.put("/update/:id", async (req, res) => {
       const id = req.params.id;
       const data = req.body;
       console.log("id", id, data);
@@ -98,7 +118,7 @@ async function run() {
           price: data.price,
           description: data.description,
           photo: data.photo,
-          
+
         },
       };
       const result = await addServiceCollection.updateOne(
@@ -108,7 +128,7 @@ async function run() {
       res.send(result);
     });
 
-      
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -120,11 +140,11 @@ async function run() {
 run().catch(console.dir);
 
 
-app.get('/', (req, res)=>{
-    res.send('car is running')
+app.get('/', (req, res) => {
+  res.send('car is running')
 })
 
-app.listen(port, ()=>{
-    console.log(`car running on ${port}`);
+app.listen(port, () => {
+  console.log(`car running on ${port}`);
 })
 //hello plz commit
