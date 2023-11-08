@@ -72,7 +72,7 @@ async function run() {
       const query = {
         userEmail: email,
       };
-      const result = await bookServiceCollection.findOne(query);
+      const result = await bookServiceCollection.find(query).toArray();
       console.log(result);
       res.send(result);
     });
