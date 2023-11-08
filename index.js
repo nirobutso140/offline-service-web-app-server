@@ -128,6 +128,20 @@ async function run() {
       res.send(result);
     });
 
+    app.patch('/status/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updatedBooking = req.body;
+      console.log(updatedBooking);
+      const updateDoc = {
+          $set: {
+              status: updatedBooking.status
+          },
+      };
+      const result = await bookServiceCollection.updateOne(filter, updateDoc);
+      res.send(result);
+  })
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
